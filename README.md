@@ -48,6 +48,26 @@ This project implements an AI-powered social media agent that autonomously engag
   - Anthropic Claude API access
   - Twitter API v2 credentials (OAuth 1.0a)
 
+
+## Attention
+The image generation model used in this project is different from Rina's. It employs a locally deployed image generation model. To use it, you need to deploy the image generation model locally and set it up on a local HTTP interface.
+
+```rust
+{
+    let request = client
+        .request(
+            reqwest::Method::POST,
+            "http://localhost:3022/stableDiffusion/submit_job",
+        )
+        .headers(headers)
+        .json(&body);
+
+    let response = request.send().await?;
+    let body = response.text().await?;
+    Ok(body.trim_matches('"').to_string())
+}
+```
+
 ## Installation
 
 1. Clone the repository:
