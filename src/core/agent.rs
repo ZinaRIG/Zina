@@ -35,7 +35,7 @@ impl Agent {
 
     pub async fn should_respond(&self, tweet: &str) -> Result<ResponseDecision, anyhow::Error> {
         let prompt = format!(
-            "Tweet: {tweet}\n\
+            "Tweet: {tweet}\
             Task: Reply [RESPOND] or [IGNORE] based on:\n\
             [RESPOND] if:\n\
             - Direct mention/address\n\
@@ -100,15 +100,16 @@ impl Agent {
         let body = json!({
             "model_input": {
                 "SD": {
-                    "width": 1024,
+                    "width": 512,
                     "height": 1024,
                     "prompt": format!("{}", base_prompt),
-                    "neg_prompt": "worst quality, bad quality, umbrella, blurry face, anime, illustration",
+                    "neg_prompt": "worst quality, bad quality, umbrella, blurry face,unclear, bad finger, bad face",
+                    "active_prompt":"Beautiful anime girl, purple hair,facing the camera,High-definition quality,Well-shaped body,good finger,good face,High-definition scene"
                     "num_iterations": 22,
                     "guidance_scale": 7.5
                 }
             },
-            "model_id": "BluePencilRealistic",
+            "model_id": "BeautifulAnimeGirl_v1_0332_model",
             "deadline": deadline,
             "priority": 1,
             "job_id": format!("job_{}", SystemTime::now().duration_since(UNIX_EPOCH)?.as_millis())
@@ -118,7 +119,7 @@ impl Agent {
         let request = client
             .request(
                 reqwest::Method::POST,
-                "http://sequencer.heurist.xyz/submit_job",
+                "http://localhost:3022/stableDiffusion/submit_job",
             )
             .headers(headers)
             .json(&body);
