@@ -101,7 +101,7 @@ impl Agent {
             "model_input": {
                 "SD": {
                     "width": 512,
-                    "height": 1024,
+                    "height": 768,
                     "prompt": format!("{}", base_prompt),
                     "neg_prompt": "worst quality, bad quality, umbrella, blurry face,unclear, bad finger, bad face",
                     "active_prompt":"Beautiful anime girl, purple hair,facing the camera,High-definition quality,Well-shaped body,good finger,good face,High-definition scene"
